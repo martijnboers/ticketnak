@@ -6,10 +6,10 @@ import time
 
 import webbrowser
 
-from settings import Settings
-
-
 # noinspection PyMethodMayBeStatic
+from src.settings import Settings
+
+
 class TicketNak:
     graph = None
     settings = None
@@ -48,7 +48,6 @@ class TicketNak:
                 self.known_post.append(post['id'])
 
     def _notify(self, post):
-        print('NEW POST')
         post = self.graph.get_object(id=post['id'], fields='link')
         webbrowser.open(post['link'])
 
