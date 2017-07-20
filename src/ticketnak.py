@@ -20,7 +20,7 @@ class TicketNak:
     def __init__(self):
         self.settings = Settings()
         self.graph = facebook.GraphAPI(access_token=self._get_acces_token(), version='2.9')
-        self.logger = logging.basicConfig(level=logging.DEBUG)
+        self.logger = logging.basicConfig(level=logging.INFO)
 
     def _get_acces_token(self):
         r = requests.get(
