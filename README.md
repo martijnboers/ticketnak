@@ -30,7 +30,7 @@ cp facebook.ini-default facebook.ini
 ```
 ## Running
 
-Make sure you have the configuration file setup with your Facebook event id. This can be found in the URL (example):
+Make sure you have the configuration file (facebook.ini) setup with your Facebook event id. This can be found in the URL, for example:
 * URL: https://www.facebook.com/events/285958198448885/
 * Eventid: 285958198448885
 
@@ -42,4 +42,4 @@ Next create add your FB_APP_ID and FB_APP_SECRET found in [Facebook developer](h
 
 ## License
 
-This project is licensed under the GPL v3 - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GPL v3 - see the [LICENSE](LICENSE.md) file for details
