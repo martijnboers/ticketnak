@@ -13,19 +13,22 @@ from settings import Settings
 class TicketNak:
     graph = None
     settings = None
-    fb_api = 'https://graph.facebook.com'
+    fb = 'https://graph.facebook.com'
     known_post = []
     logger = None
 
     def __init__(self):
         self.settings = Settings()
-        self.graph = facebook.GraphAPI(access_token=self._get_acces_token(), version='2.9')
-        self.logger = logging.basicConfig(level=logging.INFO)
+        try:
+            self.graph = facebook.GraphAPI(access_token=self._get_acces_token(), version='2.9')
+            self.logger = logging.basicConfig(level=logging.INFO)
+        except KeyError:
+            exit("Check if configuration is set right")
 
     def _get_acces_token(self):
         r = requests.get(
             '{}/oauth/access_token?grant_type=client_credentials&client_id={}&client_secret={}'.format(
-                self.fb_api, self.settings.FB_APP_ID, self.settings.FB_APP_SECRET))
+                self.fb, self.settings.FB_APP_ID, self.settings.FB_APP_SECRET))
 
         return r.json()['access_token']
 
@@ -48,22 +51,28 @@ class TicketNak:
 
     def _check(self, post):
         date = datetime.datetime.strptime(post['updated_time'], '%Y-%m-%dT%H:%M:%S+0000')
-        if date > datetime.datetime.now() - datetime.timedelta(hours=1):
-            if post['id'] not in self.known_post:
-                self.known_post.append(post['id'])
-                post_fb = self.graph.get_object(id=post['id'], fields='link')
-                if "wanted" in post_fb['link']:
-                    return
-                self._notify(post_fb['link'])
+        if date < datetime.datetime.now() - datetime.timedelta(hours=1):
+            return
+        if post['id'] in self.known_post:
+            return
+        self.known_post.append(post['id'])
+        post_fb = self.graph.get_object(id=post['id'], fields='link')
+        if "wanted" in post_fb['link']:
+            return
+
+        self._notify(post_fb['link'])
 
     def _notify(self, link):
         webbrowser.open(link)
 
     def run(self):
         while 1:
-            print('refreshed')
+            begin = time.time()
             self._filter_ticketswap_post(self._get_event_feed())
+            end = time.time()
             time.sleep(2)
+
+            print('refreshed, took {} ms'.format(round((end - begin), 2) * 1000.0))
 
 
 if __name__ == '__main__':
