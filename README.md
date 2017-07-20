@@ -1,7 +1,11 @@
 # Ticketnak
 
-Project aimed to crawl Ticketswap listings on Facebook event. Uses official 
-Facebook API and doesn't crawl Ticketswap making it both legal and possible to run for long periods.
+Project aimed to crawl Ticketswap listings on Facebook event and automatically opening the Ticketswap link in your browser
+as soon as it's posted. This reserves the ticket for the user and is faster than refreshing on your own and clicking on the link.
+Uses official Facebook API and doesn't crawl Ticketswap making it possible to run for hours in the background without 
+getting blocked by Ticketswap.
+
+The current interval is 2 seconds and I'm testing Facebook's request limit.
 
 ### Prerequisites
 
