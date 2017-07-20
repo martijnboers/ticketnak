@@ -46,4 +46,4 @@ Next create add your FB_APP_ID and FB_APP_SECRET found in [Facebook developer](h
 
 ## License
 
-This project is licensed under the GPL v3 - see the [LICENSE](LICENSE.md) file for details
+This project is licensed under the GPL v3 - see the [LICENSE](LICENSE) file for details
