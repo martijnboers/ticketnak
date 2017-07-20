@@ -6,7 +6,7 @@ import time
 import logging
 import webbrowser
 
-# noinspection PyMethodMayBeStatic,PyUnresolvedReferences
+# noinspection PyMethodMayBeStatic
 from settings import Settings
 
 
@@ -43,13 +43,12 @@ class TicketNak:
 
             except Exception as e:
                 self.logger.exception(e)
-                continue
 
         return feed
 
     def _check(self, post):
         date = datetime.datetime.strptime(post['updated_time'], '%Y-%m-%dT%H:%M:%S+0000')
-        if date > datetime.datetime.now() - datetime.timedelta(hours=10):
+        if date > datetime.datetime.now() - datetime.timedelta(hours=1):
             if post['id'] not in self.known_post:
                 self.known_post.append(post['id'])
                 post_fb = self.graph.get_object(id=post['id'], fields='link')
