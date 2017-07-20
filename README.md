@@ -30,7 +30,7 @@ cp facebook.ini-default facebook.ini
 ```
 ## Running
 
-Make sure you have the configuration file setup with your Facebook event id. This can be found in the URL :
+Make sure you have the configuration file setup with your Facebook event id. This can be found in the URL (example):
 * URL: https://www.facebook.com/events/285958198448885/
 * Eventid: 285958198448885
 
