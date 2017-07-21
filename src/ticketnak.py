@@ -5,6 +5,7 @@ import requests
 import time
 import logging
 import webbrowser
+import pytz
 
 # noinspection PyMethodMayBeStatic
 from settings import Settings
@@ -51,7 +52,7 @@ class TicketNak:
 
     def _check(self, post):
         date = datetime.datetime.strptime(post['updated_time'], '%Y-%m-%dT%H:%M:%S+0000')
-        if date < datetime.datetime.now() - datetime.timedelta(hours=1):
+        if pytz.utc.localize(date) < datetime.datetime.now(pytz.utc) - datetime.timedelta(minutes=10):
             return
         if post['id'] in self.known_post:
             return
@@ -70,7 +71,7 @@ class TicketNak:
             begin = time.time()
             self._filter_ticketswap_post(self._get_event_feed())
             end = time.time()
-            time.sleep(2)
+            time.sleep(0.5)
 
             print('refreshed, took {} ms'.format(round((end - begin), 2) * 1000.0))
 
