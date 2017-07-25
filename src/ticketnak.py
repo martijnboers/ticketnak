@@ -8,6 +8,7 @@ import webbrowser
 import pytz
 
 # noinspection PyMethodMayBeStatic
+from reserve.reserve import Reserve
 from settings import Settings
 
 
@@ -15,16 +16,26 @@ class TicketNak:
     graph = None
     settings = None
     fb = 'https://graph.facebook.com'
+    cart = 'https://www.ticketswap.com/cart'
     known_post = []
     logger = None
+    debug = False
+    scoop = None
 
-    def __init__(self):
+    def __init__(self, debug):
+        self.debug = debug
         self.settings = Settings()
         try:
             self.graph = facebook.GraphAPI(access_token=self._get_acces_token(), version='2.9')
-            self.logger = logging.basicConfig(level=logging.INFO)
+            self.logger = logging.basicConfig(level=logging.DEBUG) if self.debug else logging.basicConfig(
+                level=logging.INFO)
         except KeyError:
             exit("Check if configuration is set right")
+
+        try:
+            self.scoop = Reserve()
+        except:
+            pass
 
     def _get_acces_token(self):
         r = requests.get(
@@ -52,8 +63,8 @@ class TicketNak:
 
     def _check(self, post):
         date = datetime.datetime.strptime(post['updated_time'], '%Y-%m-%dT%H:%M:%S+0000')
-        if pytz.utc.localize(date) < datetime.datetime.now(pytz.utc) - datetime.timedelta(minutes=10):
-            return
+        # if pytz.utc.localize(date) < datetime.datetime.now(pytz.utc) - datetime.timedelta(minutes=10):
+        #     return
         if post['id'] in self.known_post:
             return
         self.known_post.append(post['id'])
@@ -64,7 +75,14 @@ class TicketNak:
         self._notify(post_fb['link'])
 
     def _notify(self, link):
-        webbrowser.open(link)
+        try:
+            if self.scoop:
+                scooped = self.scoop.reserve_ticket(link)
+                if scooped: link = self.cart
+        except Exception as e:
+            logging.warning("Could not reserve ticket {}".format(str(e)))
+        finally:
+            if not self.debug: webbrowser.open(link)
 
     def run(self):
         while 1:
@@ -73,10 +91,10 @@ class TicketNak:
             end = time.time()
             time.sleep(0.5)
 
-            print('refreshed, took {} ms'.format(round((end - begin), 2) * 1000.0))
+            if not self.debug: print('refreshed, took {} ms'.format(round((end - begin), 2) * 1000.0))
 
 
 if __name__ == '__main__':
-    ticketnak = TicketNak()
+    ticketnak = TicketNak(False)
 
     ticketnak.run()

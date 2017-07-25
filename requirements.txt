@@ -1,2 +1,5 @@
+requests
 git+https://github.com/mobolic/facebook-sdk.git#egg=facebook-sdk
 pytz
+bs4
+cookiejar
