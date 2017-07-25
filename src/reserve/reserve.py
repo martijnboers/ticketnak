@@ -20,7 +20,6 @@ class Reserve:
         }, cookies=dict(session=self.access_token))
 
         soup = BeautifulSoup(r.text, "html.parser")
-        form_data = {}
         form = soup.find("form", id="listing-reserve-form")
         if not form:
             raise Exception("Ticket already sold")
