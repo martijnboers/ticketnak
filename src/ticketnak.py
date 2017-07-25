@@ -63,8 +63,8 @@ class TicketNak:
 
     def _check(self, post):
         date = datetime.datetime.strptime(post['updated_time'], '%Y-%m-%dT%H:%M:%S+0000')
-        # if pytz.utc.localize(date) < datetime.datetime.now(pytz.utc) - datetime.timedelta(minutes=10):
-        #     return
+        if pytz.utc.localize(date) < datetime.datetime.now(pytz.utc) - datetime.timedelta(minutes=10):
+            return
         if post['id'] in self.known_post:
             return
         self.known_post.append(post['id'])

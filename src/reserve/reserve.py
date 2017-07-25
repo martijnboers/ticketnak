@@ -1,12 +1,11 @@
 from bs4 import BeautifulSoup
 import requests
-from http.cookiejar import CookieJar
 
 from settings import Settings
 
 
 class Reserve:
-    ticketswap = "https://www.ticketswap.nl"
+    ticketswap = "https://www.ticketswap.com"
     access_token = None
     session = requests.session()
     user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
