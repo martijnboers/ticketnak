@@ -21,17 +21,29 @@ git clone https://github.com/MartijnDevNull/ticketnak.git
 ```
 
 ```
-cd ticketnak/src
+cd ticketnak
 ```
 ```
 virtualenv --python=/usr/bin/python3 env
 ```
 ```
-pip install -r requirements.txt
+source env/bin/activate
+```
+```
+pip3 install -r requirements.txt
+```
+```
+cd src
 ```
 ```
 cp facebook.ini-default facebook.ini
 ```
+See Running for configration options
+```
+python3.x ticketnack.py
+```
+Replace with your version of Python 3
+
 ## Running
 
 Make sure you have the configuration file (facebook.ini) setup with your Facebook event id. This can be found in the URL, for example:
