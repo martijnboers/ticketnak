@@ -39,10 +39,6 @@ cd src
 cp facebook.ini-default facebook.ini
 ```
 See Running for configration options
-```
-python3.x ticketnack.py
-```
-Replace with your version of Python 3
 
 ## Running
 
@@ -54,6 +50,13 @@ Next create add your FB_APP_ID and FB_APP_SECRET found in [Facebook developer](h
 a new app if none exist
 
 After this login to Ticketswap and get the session cookie so the ticket is automatically added to cart (*TODO*: set ticket amount, now default 1)
+
+You can run Ticketnak with:
+```
+python3.x ticketnack.py
+```
+Replace with your version of Python 3
+
 
 ## Built With
 
