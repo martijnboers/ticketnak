@@ -1,5 +1,7 @@
 # Ticketnak
 
+*IMPORTANT: Currently automatic reservation is not working because of changes in the Ticketswap site*
+
 Project aimed to crawl Ticketswap listings on Facebook event and automatically opening the Ticketswap link in your browser
 as soon as it's posted. This (automatically) reserves the ticket for the user and is faster than refreshing on your own and clicking on the link.
 Uses official Facebook API and doesn't crawl Ticketswap making it possible to run for hours in the background without 
